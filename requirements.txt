@@ -1,0 +1,9 @@
+jupyter
+jupyter-book
+pandas
+scikit-learn
+imblearn
+matplotlib
+numpy
+joblib
+streamlit
