@@ -6,4 +6,5 @@ imblearn
 matplotlib
 numpy
 joblib
+xgboost
 streamlit
