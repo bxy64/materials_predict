@@ -4,7 +4,7 @@ import streamlit as st
 st.set_page_config(layout="wide")  # 你可以修改为 "centered" 或者添加更多参数
 
 # 访问控制（密码保护或 IP 限制）
-PASSWORD = "your_secret_password"
+PASSWORD = "zxcvbnm"
 
 def check_password():
     """简单密码验证"""
