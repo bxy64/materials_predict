@@ -1,31 +1,5 @@
 import streamlit as st
-
-# ✅ 确保 `st.set_page_config()` 是第一条 Streamlit 命令
-st.set_page_config(layout="wide")  # 你可以修改为 "centered" 或者添加更多参数
-
-# 访问控制（密码保护或 IP 限制）
-PASSWORD = "zxcvbnm"
-
-def check_password():
-    """简单密码验证"""
-    password = st.text_input("请输入访问密码", type="password")
-    if password == PASSWORD:
-        st.session_state["authenticated"] = True
-    else:
-        st.warning("密码错误，请重试！")
-
-# 如果没有登录，则显示密码输入框
-if "authenticated" not in st.session_state or not st.session_state["authenticated"]:
-    check_password()
-    st.stop()  # 阻止加载应用内容
-
-# 你的 Streamlit 应用内容
-st.title("Material Predict")
-st.write("欢迎访问！")
-
-
 import pandas as pd
-
 from sklearn.preprocessing import StandardScaler
 import xgboost as xgb
 
