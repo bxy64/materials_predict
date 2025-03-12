@@ -136,6 +136,9 @@ submitted = st.button("Predict", type="primary")
 
 
 if submitted:
+    # 确保 contact_time 为 float
+    contact_time = float(contact_time)
+    
     # 生成one-hot特征
     heavy_metal_values = {f'Heavy metal ions_{v}': 0 for v in heavy_metal_ions_choices}
     modified_values = {f'Modified_{v}': 0 for v in modified_choices}
