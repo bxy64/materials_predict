@@ -1,10 +1,4 @@
 import streamlit as st
-import pandas as pd
-
-from sklearn.preprocessing import StandardScaler
-import xgboost as xgb
-
-
 # 设置访问密码
 PASSWORD = "zxcvbnm"  # 替换成你自己的密码
 
@@ -25,6 +19,11 @@ if "authenticated" not in st.session_state or not st.session_state["authenticate
 # 正常显示应用内容
 st.title("Material Predict")
 st.write("欢迎访问！")
+
+import pandas as pd
+
+from sklearn.preprocessing import StandardScaler
+import xgboost as xgb
 
 
 # 设置宽屏模式
