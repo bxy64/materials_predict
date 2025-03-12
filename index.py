@@ -45,7 +45,7 @@ best_params = {
     'colsample_bytree': 1.0,
     'gamma': 0.5,
     'reg_alpha': 0.1,
-    'reg_lambda': 1
+    'reg_lambda': 1,
     'scale_pos_weight': 2,  # 增强剂量对吸附容量的影响
 }
 
