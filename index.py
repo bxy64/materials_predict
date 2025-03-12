@@ -1,8 +1,11 @@
 import streamlit as st
-# 设置访问密码
-PASSWORD = "zxcvbnm"  # 替换成你自己的密码
 
-# 创建登录功能
+# ✅ 确保 `st.set_page_config()` 是第一条 Streamlit 命令
+st.set_page_config(layout="wide")  # 你可以修改为 "centered" 或者添加更多参数
+
+# 访问控制（密码保护或 IP 限制）
+PASSWORD = "your_secret_password"
+
 def check_password():
     """简单密码验证"""
     password = st.text_input("请输入访问密码", type="password")
@@ -16,9 +19,10 @@ if "authenticated" not in st.session_state or not st.session_state["authenticate
     check_password()
     st.stop()  # 阻止加载应用内容
 
-# 正常显示应用内容
+# 你的 Streamlit 应用内容
 st.title("Material Predict")
 st.write("欢迎访问！")
+
 
 import pandas as pd
 
