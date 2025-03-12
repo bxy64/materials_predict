@@ -115,7 +115,7 @@ with col2:
     dosage = st.number_input("Dosage (g/L)", min_value=0.0, value=0.5, step=0.1, key='dosage')
     initial_concentration = st.number_input("Initial concentration. (mg/L)", min_value=0.0, value=10.0, key='init_conc')
     temperature = st.number_input("Temperature (°C)", value=25, key='temp')
-    contact_time = st.number_input("Contact time (h)", min_value=0, value=30, key='contact_time')
+    contact_time = st.number_input("Contact time (h)", min_value=0.00, value=30.00, step=0.01, format="%.2f", key='contact_time')
     ph = st.number_input("pH", min_value=0.0, max_value=14.0, value=6.0, step=0.1, key='ph')
 
     st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)  # 添加空白占位符
