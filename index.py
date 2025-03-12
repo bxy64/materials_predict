@@ -4,20 +4,28 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import xgboost as xgb
 
-# 获取用户信息
-user = st.experimental_user
 
-# 允许的 GitHub 用户名
-ALLOWED_USERS = ["你的GitHub用户名"]  # 替换成你的 GitHub 用户名
+# 设置访问密码
+PASSWORD = "zxcvbnm"  # 替换成你自己的密码
 
-# 验证访问权限
-if user is None or user["username"] not in ALLOWED_USERS:
-    st.error("🚫 你没有访问权限！请使用正确的 GitHub 账号。")
-    st.stop()  # 终止应用
+# 创建登录功能
+def check_password():
+    """简单密码验证"""
+    password = st.text_input("请输入访问密码", type="password")
+    if password == PASSWORD:
+        st.session_state["authenticated"] = True
+    else:
+        st.warning("密码错误，请重试！")
 
-# 如果通过验证，正常加载 Streamlit 页面
+# 如果没有登录，则显示密码输入框
+if "authenticated" not in st.session_state or not st.session_state["authenticated"]:
+    check_password()
+    st.stop()  # 阻止加载应用内容
+
+# 正常显示应用内容
 st.title("Material Predict")
 st.write("欢迎访问！")
+
 
 # 设置宽屏模式
 st.set_page_config(layout="wide")
