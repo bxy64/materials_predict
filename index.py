@@ -4,6 +4,21 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import xgboost as xgb
 
+# 获取用户信息
+user = st.experimental_user
+
+# 允许的 GitHub 用户名
+ALLOWED_USERS = ["你的GitHub用户名"]  # 替换成你的 GitHub 用户名
+
+# 验证访问权限
+if user is None or user["username"] not in ALLOWED_USERS:
+    st.error("🚫 你没有访问权限！请使用正确的 GitHub 账号。")
+    st.stop()  # 终止应用
+
+# 如果通过验证，正常加载 Streamlit 页面
+st.title("Material Predict")
+st.write("欢迎访问！")
+
 # 设置宽屏模式
 st.set_page_config(layout="wide")
 
