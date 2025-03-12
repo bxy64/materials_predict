@@ -18,20 +18,50 @@ y = data['Adsorption capacity']
 scaler = StandardScaler()
 X_std = scaler.fit_transform(X)
 
+# **增强 Contact time 影响**
+X['Contact time^2'] = X['Contact time'] ** 2
+X['Contact time^3'] = X['Contact time'] ** 3
+X['Contact_Dosage'] = X['Contact time'] * X['Dosage']  # 交互特征
+
+# **特征权重**
+feature_weights = {
+    'Contact time': 2.0,  # 提高权重
+    'Dosage': 1.5,  # 让剂量影响更大
+}
+for feature, weight in feature_weights.items():
+    if feature in X.columns:
+        X[feature] *= weight
+
+# **标准化数据**
+scaler = StandardScaler()
+X_std = scaler.fit_transform(X)
+
 
 # 训练XGBoost模型
 best_params = {
     'learning_rate': 0.1,
-    'max_depth': 3,
-    'min_child_weight': 3,
-    'colsample_bytree': 0.8,
-    'gamma': 0.1,
+    'max_depth': 6,
+    'min_child_weight': 1,
+    'colsample_bytree': 1.0,
+    'gamma': 0.5,
     'reg_alpha': 0.1,
-    'reg_lambda': 3
+    'reg_lambda': 1
+    'scale_pos_weight': 2,  # 增强剂量对吸附容量的影响
 }
 
 xgb_regressor = xgb.XGBRegressor(**best_params)
 xgb_regressor.fit(X_std, y)
+
+# **预测函数**
+def predict_external_data(external_data):
+    external_data = external_data.reindex(columns=scaler.feature_names_in_, fill_value=0)
+    external_data_std = scaler.transform(external_data)
+    return xgb_regressor.predict(external_data_std)
+
+# **Streamlit 交互界面**
+st.title('Adsorption Capacity Prediction')
+col1, col2, col3 = st.columns(3)
+
 
 # 创建与模型输入格式匹配的 DataFrame（X_input）
 def create_input_dataframe(feature_values):
@@ -156,7 +186,10 @@ if submitted:
         'Dosage': dosage,
         'Initial concentration': initial_concentration,
         'Temperature': temperature,
-        'Contact time': contact_time,
+        'Contact time': contact_time * 2.0,  # 应用权重
+        'Contact time^2': contact_time ** 2,
+        'Contact time^3': contact_time ** 3,
+        'Contact_Dosage': contact_time * dosage,
         'pH': ph,
     }
     feature_values.update(heavy_metal_values)
